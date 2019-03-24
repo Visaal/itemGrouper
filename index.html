@@ -14,6 +14,20 @@
   <body>
     <h1 id="pageHeader">Item Grouper</h1>
 
+    <div>
+      Add Item
+      <button id="addItemButton">Add Master Item</button>
+    </div>
+
+    <form action="/somepath" method="post" id="itemForm" class="hide">
+      Master Items:<br />
+      <input type="text" id="itemName" autocomplete="off" />
+
+      <button type="submit">Save Item</button>
+    </form>
+
+    <div id="itemListArea"></div>
+
     <script src="js/itemGrouper.js"></script>
   </body>
 </html>
