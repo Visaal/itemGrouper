@@ -2,20 +2,39 @@
 
 class MasterItemList {
   constructor() {
-    this.masterItemList = ["aa", "bb", "cc"];
+    this.masterItemList = {};
+    this.itemUlList = document.querySelector("#itemListArea ul");
   }
-  addMasterItem(masterItem) {
+  createListItem(masterItem, masterList, masterItemSymbol) {
+    let listItem = document.createElement("li");
+    let text = document.createTextNode(masterItem);
+    var attributesButton = document.createElement("button");
+    attributesButton.innerText = "Associate";
+    attributesButton.addEventListener("click", function() {
+      // calling method from within another method - passed the masterList context into the button
+      masterList.deleteMasterItem(listItem, masterItemSymbol);
+    });
+    attributesButton.id = masterItem;
+    listItem.appendChild(text);
+    this.itemUlList.appendChild(listItem);
+    listItem.appendChild(attributesButton);
+  }
+  addMasterItem(masterItem, masterList) {
     if (masterItem) {
-      this.masterItemList.push(masterItem);
+      let masterItemSymbol = Symbol(masterItem);
+      this.masterItemList[masterItemSymbol] = masterItem;
+      this.createListItem(masterItem, masterList, masterItemSymbol);
     }
   }
   showMasterItems(htmlListAreaId) {
-    let masterItems = "";
-    let showList = document.getElementById(htmlListAreaId);
-    this.masterItemList.forEach(
-      masterItem => (masterItems += masterItem + "<br />")
-    );
-    showList.innerHTML = masterItems;
+    Object.keys(this.masterItemList).forEach(masterItem => {
+      this.createListItem(this.masterItemList[masterItem]);
+    });
+  }
+  deleteMasterItem(listItem, masterItemSymbol) {
+    let ul = listItem.parentNode;
+    ul.removeChild(listItem);
+    delete this.masterItemList[masterItemSymbol];
   }
 }
 
@@ -29,9 +48,10 @@ addItemButton.addEventListener("click", function() {
 let itemForm = document.getElementById("itemForm");
 itemForm.addEventListener("submit", event => {
   let itemToAdd = itemForm.elements["itemName"].value;
-  masterList.addMasterItem(itemToAdd);
-  masterList.showMasterItems("itemListArea");
+  masterList.addMasterItem(itemToAdd, masterList);
   itemForm.reset();
   itemForm.classList.toggle("hide");
   event.preventDefault();
 });
+
+window.addEventListener("load", masterList.showMasterItems());
