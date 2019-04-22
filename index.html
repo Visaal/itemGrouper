@@ -20,10 +20,41 @@
     </div>
 
     <form action="/somepath" method="post" id="itemForm" class="hide">
-      Master Items:<br />
-      <input type="text" id="itemName" autocomplete="off" />
+      <div>
+        <strong>Add Item</strong>
+        <button type="submit">Save Item</button>
+      </div>
 
-      <button type="submit">Save Item</button>
+      <div>
+        <label for="campaign">Campaign</label>
+        <input name="itemType" type="radio" id="campaign" value="campaign" />
+
+        <label for="placement">Placement</label>
+        <input name="itemType" type="radio" id="placement" value="placement" />
+
+        <label for="creative">Creative</label>
+        <input name="itemType" type="radio" id="creative" value="creative" />
+      </div>
+
+      <div>
+        <label for="itemName">Name</label>
+        <input name="itemName" type="text" id="itemName" autocomplete="off" />
+      </div>
+
+      <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" />
+      </div>
+
+      <div>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" />
+      </div>
+
+      <div>
+        <label for="addAttributes">Add Attributes</label>
+        <button type="button" id="addAttributesButton">Add Attributes</button>
+      </div>
     </form>
 
     <div id="itemListArea">
